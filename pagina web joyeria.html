@@ -1,0 +1,109 @@
+<!-- ======================================== -->
+<!--              HTML: Estructura          -->
+<!-- ======================================== -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joyería Elegante</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Hover.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" />
+
+  <style>
+    body {
+      font-family: 'Playfair Display', serif;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Mensaje de bienvenida -->
+  <section class="text-center p-6 bg-beige-100">
+    <h1 class="text-3xl font-bold mb-4">¡Bienvenido a nuestra joyería elegante!</h1>
+    <p class="mb-2">Recibe un <span class="text-blue-400 font-semibold">10% de descuento</span> en tu primera compra</p>
+    <input id="emailInput" type="email" placeholder="Ingresa tu correo" class="border p-2 rounded" />
+    <button onclick="enviarCorreo()" class="ml-2 px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-500">Enviar</button>
+  </section>
+
+  <!-- Menú de navegación -->
+  <nav class="flex justify-around bg-gray-800 text-white py-4">
+    <a href="#catalogo" class="hover:underline">Catálogo</a>
+    <a href="#carrito" class="hover:underline">Carrito</a>
+    <a href="#quienes-somos" class="hover:underline">Quiénes Somos</a>
+    <a href="#contacto" class="hover:underline">Contacto</a>
+  </nav>
+
+  <!-- Catálogo de joyería -->
+  <section id="catalogo" class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+    <div class="border rounded-lg p-4 shadow hover:shadow-lg transition duration-300 hover:scale-105">
+      <img src="https://via.placeholder.com/300" alt="Anillo elegante" class="mb-2 cursor-pointer" onclick="mostrarDetalles('Anillo de Plata', '499 MXN', 'Tamaño: 6', 'Plata .925', 'Elegante y sofisticado.')">
+      <h2 class="text-xl font-semibold">Anillo de Plata</h2>
+      <p>$499 MXN</p>
+      <div class="flex items-center mt-2">
+        <button onclick="cambiarCantidad(-1, 'contador1')" class="px-2 bg-gray-300 rounded">-</button>
+        <span id="contador1" class="px-4">0</span>
+        <button onclick="cambiarCantidad(1, 'contador1')" class="px-2 bg-gray-300 rounded">+</button>
+      </div>
+    </div>
+    <!-- Más productos aquí... -->
+  </section>
+
+  <!-- Quiénes Somos y Contacto -->
+  <section id="quienes-somos" class="p-6">
+    <h2 class="text-2xl font-bold">Quiénes Somos</h2>
+    <p class="mt-2">Somos una empresa mexicana dedicada a la elegancia, el detalle y la autenticidad.</p>
+  </section>
+
+  <section id="contacto" class="p-6">
+    <h2 class="text-2xl font-bold">Contacto</h2>
+    <p class="mt-2">Puedes escribirnos a contacto@joyeriaejemplo.com</p>
+  </section>
+
+  <!-- Script JS -->
+  <script>
+    // Mostrar detalles del producto con SweetAlert
+    function mostrarDetalles(nombre, precio, tamano, material, descripcion) {
+      Swal.fire({
+        title: nombre,
+        html: `<p><strong>Precio:</strong> ${precio}</p>
+               <p><strong>${tamano}</strong></p>
+               <p><strong>Material:</strong> ${material}</p>
+               <p>${descripcion}</p>`,
+        icon: 'info',
+        confirmButtonText: 'Cerrar'
+      });
+    }
+
+    // Contador de productos (manejo de errores básico incluido)
+    function cambiarCantidad(valor, idContador) {
+      const contador = document.getElementById(idContador);
+      let actual = parseInt(contador.innerText);
+      if (isNaN(actual)) actual = 0;
+      actual += valor;
+      if (actual < 0) actual = 0;
+      contador.innerText = actual;
+    }
+
+    // Envío de correo con validación
+    function enviarCorreo() {
+      const correo = document.getElementById("emailInput").value;
+      if (!correo || !correo.includes("@")) {
+        alert("Por favor ingresa un correo electrónico válido.");
+        return;
+      }
+      Swal.fire("¡Gracias!", "Tu cupón de descuento ha sido enviado.", "success");
+    }
+  </script>
+</body>
+</html>
